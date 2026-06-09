@@ -395,31 +395,69 @@ a:hover{color:var(--gold)}
   background:url("images/bus-on-road.png") center/cover no-repeat;
 }
 
-.rsvp-r{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:40px}
-.field{display:flex;flex-direction:column;gap:8px}
-.field-row{display:flex;gap:18px}
+.rsvp-r{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:48px}
+.rsvp-r form{display:flex;flex-direction:column;gap:24px}
+.field{display:flex;flex-direction:column;gap:10px}
+.field-row{display:flex;gap:24px}
 .field-row .field{flex:1;min-width:0}
-.field label{font-size:11px;letter-spacing:.2em;color:var(--gold)}
-.field input,.field select{
-  height:42px;background:transparent;border:0;border-bottom:1px solid var(--cocoa);
-  color:var(--offwhite);font-size:14px;outline:none;
-  transition:border-color var(--t-fast) ease-in-out;
+.field label{font-size:11px;letter-spacing:.22em;color:var(--gold);font-weight:400}
+.field input,.field select,.field textarea{
+  background:rgba(237,234,226,.04);
+  border:0;border-bottom:1px solid rgba(191,172,117,.35);
+  color:var(--offwhite);font-size:15px;font-family:inherit;outline:none;
+  padding:0 14px;
+  transition:border-color var(--t-fast) ease-in-out,background var(--t-fast) ease-in-out;
 }
-.field input::placeholder,.field select{color:var(--eggshell)}
-.field input:hover,.field select:hover,
-.field input:focus,.field select:focus{border-color:var(--gold)}
-.field select{appearance:none;background:transparent}
+.field input,.field select{height:48px}
+.field input::placeholder,.field textarea::placeholder{color:rgba(237,234,226,.55)}
+.field select{color:var(--eggshell)}
+.field input:hover,.field select:hover,.field textarea:hover{
+  background:rgba(237,234,226,.07);
+  border-bottom-color:rgba(191,172,117,.6);
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  background:rgba(237,234,226,.09);
+  border-bottom-color:var(--gold);
+}
+.field select{appearance:none;background:rgba(237,234,226,.04)}
 .field select option{color:var(--charcoal);background:var(--offwhite)}
+.field textarea{padding:14px;resize:vertical;min-height:108px;line-height:1.5}
+.rsvp-consent{display:flex;gap:14px;align-items:flex-start;margin-top:4px}
+.rsvp-consent input[type="checkbox"]{
+  width:18px;height:18px;flex:none;margin-top:2px;
+  accent-color:var(--gold);cursor:pointer;
+}
+.rsvp-consent label{
+  font-size:12px;line-height:1.6;color:rgba(237,234,226,.75);cursor:pointer;
+}
+.rsvp-consent label i{font-style:italic}
+.rsvp-error{
+  display:none;font-size:13px;color:#d97a7a;line-height:1.5;padding:2px 0;
+}
+.rsvp-error.is-visible{display:block}
 .rsvp-submit{
   align-self:flex-start;
   display:inline-flex;align-items:center;justify-content:center;
   background:transparent;color:var(--gold);
-  padding:14px 28px;font-size:13px;letter-spacing:.06em;cursor:pointer;
+  padding:16px 36px;font-size:13px;letter-spacing:.08em;cursor:pointer;
   border:0;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);
-  position:relative;margin-top:8px;
+  position:relative;margin-top:4px;
   transition:color var(--t-fast) ease-in-out;
 }
 .rsvp-submit:hover{background:transparent}
+.rsvp-submit:disabled{opacity:.5;cursor:not-allowed}
+.rsvp-success{
+  display:flex;flex-direction:column;gap:14px;
+  padding:48px 36px;border:1px solid var(--gold);
+  text-align:center;align-items:center;
+}
+.rsvp-success h3{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:40px;line-height:1.1;color:var(--gold);
+}
+.rsvp-success p{
+  font-size:15px;line-height:1.65;color:var(--eggshell);max-width:380px;
+}
 
 /* ============================================================
    ABOUT
@@ -1115,8 +1153,40 @@ a:hover{color:var(--gold)}
       <div class="rsvp-l-img js-fade" aria-hidden="true"></div>
     </div>
     <div class="rsvp-r js-fade">
-      <iframe src="https://api.aevadigital.com/api/v1/forms/488/form-view/" title="MyForm" width="100%" style="min-height:640px;border:0;background:transparent;" onload="onPageLoad('production')" id="myFormEmbed" frameborder="0"></iframe>
-      <script type="text/javascript" src="https://aeva-static-bucket.s3.amazonaws.com/static/js/embedAevaScript.js"></script>
+      <form class="staff-benefit-form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="first_name">FIRST NAME*</label>
+            <input id="first_name" name="first_name" type="text" placeholder="First Name" required />
+          </div>
+          <div class="field">
+            <label for="last_name">LAST NAME*</label>
+            <input id="last_name" name="last_name" type="text" placeholder="Last Name" required />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="email">EMAIL*</label>
+            <input id="email" name="email" type="email" placeholder="Email" required />
+          </div>
+          <div class="field">
+            <label for="phone">PHONE*</label>
+            <input id="phone" name="phone" type="tel" placeholder="Phone" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">MESSAGE</label>
+          <textarea id="message" name="message" placeholder="Anything we should know?"></textarea>
+        </div>
+        <div class="rsvp-consent">
+          <input id="newsletter" name="newsletter" type="checkbox" required />
+          <label for="newsletter">
+            <i>By submitting this form, you agree to receive marketing text messages, alerts, and notifications from Aria Integrative Health. Message frequency may vary. Rates may be applied. You can opt out at any time by replying STOP.</i>
+          </label>
+        </div>
+        <div id="form-error" class="rsvp-error" role="alert" aria-live="polite"></div>
+        <button type="submit" class="rsvp-submit">SUBMIT</button>
+      </form>
     </div>
   </section>
 
@@ -1309,6 +1379,93 @@ a:hover{color:var(--gold)}
   }
   tick();
   setInterval(tick, 1000);
+
+  /* RSVP form — posts to Aeva contacts API */
+  document.querySelectorAll('.staff-benefit-form').forEach(function(form){
+    var submitBtn = form.querySelector('.rsvp-submit');
+    var errEl = form.querySelector('#form-error');
+
+    function showError(msg){
+      if(!errEl) return;
+      errEl.textContent = msg || '';
+      errEl.classList.toggle('is-visible', !!msg);
+    }
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      showError('');
+      submitBtn.disabled = true;
+
+      var first_name = form.querySelector('#first_name').value.trim();
+      var last_name  = form.querySelector('#last_name').value.trim();
+      var email      = form.querySelector('#email').value.trim();
+      var phone      = form.querySelector('#phone').value.trim();
+      var message    = form.querySelector('#message').value.trim();
+      var checkbox   = form.querySelector('#newsletter').checked ? 'on' : '';
+
+      var emailRe = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+      if(!emailRe.test(email)){
+        showError('Please enter a valid email address.');
+        submitBtn.disabled = false;
+        return;
+      }
+      var phoneRe = /^[0-9]{10}$/;
+      if(!phoneRe.test(phone)){
+        showError('Please enter a 10-digit US phone number.');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      var fd = new FormData();
+      fd.append('first_name', first_name);
+      fd.append('last_name', last_name);
+      fd.append('phone', '+1' + phone);
+      fd.append('email', email);
+      fd.append('checkbox', checkbox);
+      fd.append('organization', '38b94844-5226-48f6-a920-6ab60dc01184');
+      fd.append('form', '488');
+      fd.append('message', message);
+      fd.append('form_location', window.location.href);
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var trackingMap = {
+        gclid: 'google', wbraid: 'google', gbraid: 'google',
+        fbclid: 'meta', ttclid: 'tiktok'
+      };
+      var trackingParam = '';
+      var adSource = 'other';
+      for(var key in trackingMap){
+        var val = urlParams.get(key);
+        if(val){ trackingParam = val; adSource = trackingMap[key]; break; }
+      }
+      fd.append('tracking_param', trackingParam);
+      fd.append('ad_source', adSource);
+
+      try {
+        var res = await fetch(
+          'https://api.aevadigital.com/api/v1/contacts/add_contact_from_form/',
+          { method:'POST', body: fd }
+        );
+        if(!res.ok){
+          var txt = await res.text().catch(function(){ return res.statusText; });
+          throw new Error(txt || 'Server error');
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event:'form-success' });
+
+        form.style.display = 'none';
+        var thankYou = document.createElement('div');
+        thankYou.className = 'rsvp-success';
+        thankYou.innerHTML = '<h3>Thank you.</h3><p>Your RSVP has been received. Aria\'s scheduling team will confirm your demo slot by email within 24 hours.</p>';
+        form.parentNode.insertBefore(thankYou, form.nextSibling);
+      } catch(err) {
+        console.error(err);
+        showError('Submission failed — please try again.');
+        submitBtn.disabled = false;
+      }
+    });
+  });
 })();
 </script>
 </body>
